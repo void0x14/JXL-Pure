@@ -1,0 +1,40 @@
+name: VHS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  vhs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies (VHS, FFmpeg, TTYD)
+        run: |
+          # Install VHS and tools from Charmbracelet APT
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+          sudo apt-get update
+          sudo apt-get install -y vhs ffmpeg ttyd libjxl-tools fd-find imagemagick
+
+          # Link fdfind
+          sudo ln -s /usr/bin/fdfind /usr/local/bin/fd
+          
+          # Setup our script
+          sudo cp jxl-pure.sh /usr/local/bin/jxl-pure
+          sudo chmod +x /usr/local/bin/jxl-pure
+
+      - name: Generate GIF
+        run: vhs demo.tape
+
+      - name: Commit GIF
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: Update demo.gif (Automated)"
+          file_pattern: 'assets/*.gif'
