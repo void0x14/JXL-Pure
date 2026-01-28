@@ -1,12 +1,12 @@
 # Active Context
 
 ## Mevcut Odak
-- `cjxl` komutunun en güncel parametrelerini doğrulamak.
-- Fish shell ile uyumlu, yorum satırı içermeyen, dayanıklı (robust) bir script tasarlamak.
+- `find` komutunun HDD üzerindeki yavaşlığını `fd` ile aşmak.
+- Kullanıcıya işlem sırasında anlık geri bildirim (progress) vermek.
 
 ## Yakın Zamandaki Kararlar
-- **Effort 7 Kararı**: Kullanıcının "9 gereksiz yere uzun sürüyorsa 7 olsun" talebi üzerine, libjxl topluluğu tarafından genel kabul gören verimlilik noktası olan 7 seviyesi seçildi.
-- **Transcoding Kararı**: JPEG dosyaları için modern "Brotli-style" recompression (re-encode değil) kullanılacak. Bu, dosyanın orijinal piksellerine dokunmadan veriyi daha verimli paketler.
+- **fd Geçişi**: `find` komutu 1TB HDD'lerde tarama yaparken çok yavaş kaldığı ve çıktı vermediği için, CachyOS'te varsayılan olarak bulunan ve çok daha hızlı olan `fd` aracına geçildi.
+- **Dinamik Yol Desteği**: `realpath` kullanılarak scriptin her yerden (absolute/relative) güvenle çalışması sağlandı.
 
 ## Bir Sonraki Adımlar
 1. Kullanıcıya uygulanacak planı sunmak.
