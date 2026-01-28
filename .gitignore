@@ -1,0 +1,7 @@
+firebase-debug.log
+.gemini/
+.agent/
+node_modules/
+dist/
+build/
+*.jxl
